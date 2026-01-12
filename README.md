@@ -1,6 +1,6 @@
 # PROYECTO INTEGRADO: L2-CryptoBench Platform
 **Facultad:** Ingeniería de Software / Ciencias de la Computación  
-**Integrantes:** Marcos Escobar, Mateo Sosa, Fernando Tipán  
+**Integrantes:** Marcos Escobar, Mateo Sosa, Stefany Díaz (Dependiendo la materia)  
 **Repositorio:** GitHub Private (Invitación a docentes)
 
 ---
