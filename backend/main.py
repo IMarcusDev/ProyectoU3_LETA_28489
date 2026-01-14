@@ -1,3 +1,6 @@
+# Install dependencies
+## pip install -r requirements.txt
+
 from fastapi import FastAPI
 
 from src.routes.transaction_routes import router as transaction_router
