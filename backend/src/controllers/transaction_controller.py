@@ -12,7 +12,7 @@ from Crypto.Cipher import PKCS1_OAEP
 from src.models.transaction import Transaction
 
 
-GAS_PER_BYTE = 16        # worst-case calldata
+GAS_PER_BYTE = 16       # worst-case calldata
 L1_GAS_PRICE = 30       # gwei (fixed for reproducibility)
 L2_GAS_PRICE = 0.015    # gwei
 
