@@ -118,32 +118,42 @@ class TransactionController:
 
     return elapsed, len(ciphertext)
 
-  def _executeAES256(self, text: str):
-    data = text.encode("utf-8")
-
-    key = get_random_bytes(32)   # 256 bits
-    iv = get_random_bytes(16)
-
-    cipher = AES.new(key, AES.MODE_CBC, iv)
-
-    # PKCS7 padding
-    pad_len = 16 - len(data) % 16
-    padded_data = data + bytes([pad_len]) * pad_len
-
-    start = time.perf_counter()
-    ciphertext = cipher.encrypt(padded_data)
-    elapsed = time.perf_counter() - start
-
-    return elapsed, len(ciphertext)
-
   def _executeRSA(self, text: str):
+    """
+    Cifra el texto usando RSA-2048 con chunking para textos largos.
+    
+    RSA-2048 con OAEP padding solo puede cifrar ~214 bytes por operación.
+    Para textos más largos, dividimos en chunks y ciframos cada uno.
+    
+    Esta implementación refleja el uso real de RSA donde típicamente
+    se cifran claves simétricas pequeñas en lugar de datos extensos.
+    """
     data = text.encode("utf-8")
 
+    # Generar clave RSA-2048
     key = RSA.generate(2048)
     cipher = PKCS1_OAEP.new(key.publickey())
 
+    # RSA-2048 con OAEP puede cifrar hasta ~214 bytes
+    # Usamos 190 como límite seguro para evitar edge cases
+    MAX_CHUNK_SIZE = 190
+
     start = time.perf_counter()
-    ciphertext = cipher.encrypt(data)
+    
+    # Si el texto cabe en un chunk, cifrar directamente
+    if len(data) <= MAX_CHUNK_SIZE:
+      ciphertext = cipher.encrypt(data)
+    else:
+      # Para textos largos, dividir en chunks
+      chunks = []
+      for i in range(0, len(data), MAX_CHUNK_SIZE):
+        chunk = data[i:i + MAX_CHUNK_SIZE]
+        encrypted_chunk = cipher.encrypt(chunk)
+        chunks.append(encrypted_chunk)
+      
+      # Concatenar todos los chunks cifrados
+      ciphertext = b''.join(chunks)
+    
     elapsed = time.perf_counter() - start
 
     return elapsed, len(ciphertext)
@@ -161,4 +171,3 @@ class TransactionController:
     l1_fee = calldata_gas * 30 * OP_L1_FEE_SCALAR * 1e-9
     l2_fee = 21000 * 0.015 * 1e-9
     return l1_fee + l2_fee
-
