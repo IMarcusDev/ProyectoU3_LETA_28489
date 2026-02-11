@@ -68,7 +68,6 @@ const tabs = [
             </svg>
             <div class="logo-text">
               <h1>CryptoAnalyzer</h1>
-              <span class="tagline">Professional Edition</span>
             </div>
           </div>
         </div>
@@ -76,7 +75,6 @@ const tabs = [
           <div class="header-meta">
             <span class="project-label">Proyecto Final</span>
             <span class="separator">•</span>
-            <span class="course-name">Sistemas Operativos & Blockchain</span>
           </div>
         </div>
       </div>
@@ -222,9 +220,7 @@ const tabs = [
     <footer class="app-footer">
       <div class="footer-content">
         <p class="footer-text">
-          © 2026 CryptoAnalyzer Professional Edition
-          <span class="separator">•</span>
-          <span class="footer-badge">ESPE - Sistemas Operativos</span>
+          © 2026 CryptoAnalyzer
         </p>
       </div>
     </footer>
